@@ -1,6 +1,10 @@
 package com.momo.controller;
 
 
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,13 +27,9 @@ import com.momo.vo.Member;
  *    (https://developer.mozilla.org/ko/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
  * 
  * 3. 메서드의 리턴타입
- *  
    *     ▶  VO, DTO
  *  	JSON타입의 데이터를 만들어서 반환 하는 용도로 사용
- *  	Json타입으로 반환하기 위해서는 메서드선언부에 
- *  	ResponseBody 어노테이션이 추가 되어야 합니다.
  * 
- * @author pjn
  *
  */
 @Controller
@@ -40,15 +40,27 @@ public class RestController {
 		return member;
 	}
 	
-	
+	/**
+	 * ResponseEntity
+	 *  헤더 정보를 가공하기 위한 용도로 사용
+	 *  
+	 * 	Request, Response 객체를 직접 다루지 않고 
+	 * 	스프링MVC에서 제공해주는 어노테이션또는 객체를 이용 합니다.
+	 */
+	@GetMapping("restResponseEntity")
+	public ResponseEntity<String> rest1(){
+		HttpHeaders header = new HttpHeaders();
+		header.add("content-type", "application/json;charset=UTF-8");
+		
+		String msg = "{\"name\":\"모모\"}";
+		ResponseEntity<String> rs = 
+				new ResponseEntity<String>(msg, header, HttpStatus.OK);
+		
+		return rs;
+	}
 }
 
-/**
- * ResponseEntity
- *  헤더 정보를 가공하기 위한 용도로 사용
- * 	Request, Response 객체를 직접 다루지 않고 
- * 	스프링MVC에서 제공해주는 어노테이션또는 객체를 이용 합니다.
- */
+
 
 
 
