@@ -80,6 +80,8 @@ public class MappingController {
 	 *  
 	 * 	VO객체를 지정 할 경우, 객체를 생성후 파라메터의 name속성과 일치하는 필드에 세팅 해줍니다.
 	 *  단, 타입이 불일치 하는경우 400오류가 발생 할 수 있습니다.
+	 *  
+	 *  ?name=모모&age=123
 	 */
 	@GetMapping("/getMapping")
 	public String getMapping(@RequestParam("name") String name
