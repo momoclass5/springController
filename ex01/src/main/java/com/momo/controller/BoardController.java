@@ -20,6 +20,14 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class BoardController {
 
+	/**
+	 * /board/msg
+	 * WEB-INF/views/board/msg.jsp
+	 */
+	@GetMapping("msg")
+	public void msg() {
+		
+	}
 	
 	@GetMapping("message")
 	public void message(Model model) {
@@ -65,8 +73,6 @@ public class BoardController {
 	 * Model과 같이 매개변수로 받아 사용
 	 * addFlashAttribute : 세션에 저장후 페이지 전환
 	 * 
-	 * 
-	 * 
 	 */
 	@PostMapping("write")
 	public String writeAction(BoardVO board
@@ -79,7 +85,7 @@ public class BoardController {
 		
 		String msg = "";
 		
-		if(res < 0) {
+		if(res > 0) {
 			
 			msg = board.getBno() + "번 등록되었습니다";
 			// url?msg=등록 (쿼리스트링으로 전달 -> param.msg)
@@ -99,6 +105,7 @@ public class BoardController {
 		
 		
 	}
+	
 }
 
 
