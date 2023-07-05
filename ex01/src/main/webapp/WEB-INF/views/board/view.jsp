@@ -23,7 +23,13 @@
 <body>
 
 <%@include file="../common/header.jsp" %>
+<script type="text/javascript">
 
+function requestAction(url){
+	viewForm.action=url;
+	viewForm.submit();
+}
+</script>
 
 <main class="container">
   <div class="bg-light p-5 rounded">
@@ -34,7 +40,8 @@
   <p></p>
   <!-- 상세보기 -->
   <div class="list-group w-auto">
-    <form method="post" action="/board/write">
+    <form method="get" name="viewForm">
+    <input type="text" name="bno" value="${board.bno }">
 	<div class="mb-3">
 	  <label for="title" class="form-label">제목</label>
 	  <input name="title" id="title" 
@@ -51,8 +58,8 @@
 	  			value='${board.writer }' id="writer" name="writer">
 	</div>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
-		<button type="submit" class="btn btn-primary btn-lg">수정</button>
-		<button type="submit" class="btn btn-primary btn-lg">삭제</button>
+		<button type="submit" class="btn btn-primary btn-lg" onclick="requestAction('/board/edit')">수정</button>
+		<button type="submit" class="btn btn-primary btn-lg" onclick="requestAction('/board/delete')">삭제</button>
 	</div>
 	</form>
     

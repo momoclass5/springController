@@ -50,9 +50,10 @@ public class BoardController {
 	}
 	
 	@GetMapping("view")
-	public void getOne(Model model, int bno) {
-		log.info("================ bno" + bno);
-		model.addAttribute("board", boardService.getOne(bno));
+	public void getOne(Model model, BoardVO paramVO) {
+		log.info("================ bno" + paramVO);
+		BoardVO board = boardService.getOne(paramVO.getBno());
+		model.addAttribute("board", board);
 	}
 	
 	/**
@@ -106,6 +107,12 @@ public class BoardController {
 		
 	}
 	
+	@GetMapping("edit")
+	public String edit(BoardVO paramVO, Model model) {
+		BoardVO board = boardService.getOne(paramVO.getBno());
+		model.addAttribute("board", board);
+		return "/board/write";
+	}
 }
 
 

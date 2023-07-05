@@ -35,18 +35,19 @@
   <!-- 글쓰기 -->
   <div class="list-group w-auto">
     <form method="post" action="/board/write">
+    <input type="text" name="bno" value="${board.bno}">
 	<div class="mb-3">
 	  <label for="title" class="form-label">제목</label>
 	  <input name="title" id="title" 
-	  type="text" readonly class="form-control-plaintext" value='타이틀'>
+	  type="text" class="form-control" value="${board.title}">
 	</div>
 	<div class="mb-3">
 	  <label for="content" class="form-label">내용</label>
-	  <textarea class="form-control" id="content" name="content" rows="3"></textarea>
+	  <textarea class="form-control" id="content" name="content" rows="3">${board.content}</textarea>
 	</div>
 	<div class="mb-3">
 	  <label for="writer" class="form-label">작성자</label>
-	  <input type="text" class="form-control" id="writer" name="writer">
+	  <input type="text" class="form-control" id="writer" name="writer" value="${board.writer}">
 	</div>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
 		<button type="submit" class="btn btn-primary btn-lg">글쓰기</button>
