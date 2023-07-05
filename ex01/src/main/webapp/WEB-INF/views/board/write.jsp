@@ -9,8 +9,9 @@
 <body>
 <h2>게시판 글쓰기</h2>
 <script type="text/javascript">
+	// 메세지 처리
 	let msg = '${msg}';
-	if(msg != null && msg != ''){
+	if(msg != ''){
 		alert(msg);
 	}
 </script>
@@ -23,3 +24,19 @@
 </form>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

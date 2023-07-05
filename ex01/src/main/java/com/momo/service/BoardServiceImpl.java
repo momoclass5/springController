@@ -39,7 +39,6 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public List<BoardVO> getListXml() {
-		
 		return boardMapper.getListXml();
 	}
 
