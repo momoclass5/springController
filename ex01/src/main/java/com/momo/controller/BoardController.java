@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.momo.service.BoardService;
 import com.momo.vo.BoardVO;
+import com.momo.vo.Criteria;
 
 import lombok.extern.log4j.Log4j;
 
@@ -39,14 +40,19 @@ public class BoardController {
 	}
 	@Autowired
 	BoardService boardService;
-	
+	/**
+	 * 파라메터의 자동수집
+	 * 	기본생성자를 이용해서 객체를 생성
+	 * 	-> setter 메서드를 이용해서 세팅
+	 * @param model
+	 * @param cri
+	 */
 	@GetMapping("list")
-	public void getList(Model model) {
-		List<BoardVO> list = boardService.getListXml();
-		log.info("====================");
-		log.info(list);
+	public void getList(Model model, Criteria cri) {
+		boardService.getListXml(cri, model);
+		log.info("====================list");
+		log.info("cri : " + cri);
 		
-		model.addAttribute("list", list);
 	}
 	
 	@GetMapping("view")
@@ -111,9 +117,54 @@ public class BoardController {
 	public String edit(BoardVO paramVO, Model model) {
 		BoardVO board = boardService.getOne(paramVO.getBno());
 		model.addAttribute("board", board);
+		
 		return "/board/write";
 	}
+	
+	@PostMapping("editAction")
+	public String editAction(BoardVO board
+								, RedirectAttributes rttr
+								, Model model) {
+		// 수정
+		int res = boardService.update(board);
+		
+		if(res > 0) {
+			// redirect시 request 영역이 공유 되지 않으므로 
+			// RedirectAttributes를 이용 합니다. 
+			//model.addAttribute("msg", "수정 되었습니다.");
+			rttr.addFlashAttribute("msg", "수정되었습니다.");
+			
+			// 상세페이지로 이동
+			return "redirect:/board/view?bno=" + board.getBno();			
+		} else {
+			model.addAttribute("msg", "수정중 예외사항이 발생 하였습니다.");
+			return "/board/message";
+		}
+		
+	}
+	
+	@GetMapping("delete")
+	public String delete(BoardVO board
+							, RedirectAttributes rttr
+							, Model model) {
+		
+		int res = boardService.delete(board.getBno());
+		if(res > 0) {			
+			rttr.addFlashAttribute("msg", "삭제되었습니다.");
+			return "redirect:/board/list";
+		} else {
+			model.addAttribute("msg", "삭제중 예외가 발생 하였습니다.");
+			return "/board/message";
+		}
+	}
 }
+
+
+
+
+
+
+
 
 
 

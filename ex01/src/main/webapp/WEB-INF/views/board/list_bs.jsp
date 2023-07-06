@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="ar" >
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,92 +13,12 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	<link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/navbar-fixed/">
-	<link href="/resources/css/style2.css" rel="stylesheet"/>
+	<link href="/resources/css/style.css" rel="stylesheet"/>
 	
 	
   </head>
   <body> 
-<header>
-  <div class="collapse bg-dark" id="navbarHeader">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-md-7 py-4">
-          <h4 class="text-white">헤더</h4>
-          <p class="text-muted">헤더 영역입니다.</p>
-        </div>
-        <div class="col-sm-4 offset-md-1 py-4">
-          <h4 class="text-white">아쉽게도</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" class="text-white">아직</a></li>
-            <li><a href="#" class="text-white">기능이</a></li>
-            <li><a href="#" class="text-white">없다</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="container">
-      <a href="http://google.com" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        <strong>원준</strong>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="تبديل التنقل">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-  </div>
-</header>
-
-<main>
-
-  <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light"><strong>게시판</strong></h1>
-        <p class="lead text-muted">부트 스트랩을 사용한 게시판 만들기</p>
-        <p>
-          <a href="/board/insert_bs" class="btn btn-primary my-2">글쓰기</a>
-          <a href="/board/delete?bno=" class="btn btn-secondary my-2">삭제하기</a>
-        </p>
-       <%@ include file="pageNavi_bs.jsp" %>
-      </div>
-    </div>
-  </section>
-	
-
-  <div class="album py-5 bg-light">
-    <div class="container">
-    
-   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-	<!-- forEach -->
-	<c:forEach items="${list }" var="board">
-        <div class="col">
-           <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">${board.title }</text></svg>
-
-            <div class="card-body">
-              <p class="card-text">${board.content }</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary"
-                  				onclick="location.href='/board/view_bs?bno=${board.bno}'">상세보기</button></div>
-                <small class="text-muted">No.${board.bno}</small>
-              </div>
-            </div>
-          </div>          
-        </div>
-     </c:forEach>
-        </div>
-        </div>
-       </div>
-</main>
-
-<footer class="text-muted py-5">
-  <div class="container">
-    <p class="mb-1">made in © Bootstrap and <a href="#">wonjoon</a></p>
-    </div>
-</footer>
+  <%@ include file="pageNavi_bs.jsp" %>
 	
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
