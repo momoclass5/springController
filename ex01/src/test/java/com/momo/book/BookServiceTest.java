@@ -31,7 +31,9 @@ public class BookServiceTest {
 	}
 	
 	@Test
-	public void getTotalCnt() {
+	public void getOne() {
+		BookVO book = bookService.getOne(1193, null);
+		log.info(book);
 		
 	}
 	

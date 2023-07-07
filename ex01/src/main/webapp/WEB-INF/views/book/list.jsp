@@ -22,17 +22,17 @@
 	                </div>
 	                <!-- 검색폼 -->
 	                <form name="searchForm" action="/book/list">
-	                <input type="text" name="pageNo" value="1">
+	                <input type="hidden" name="pageNo" value="1">
 	                <div class="form-inline text-center"> 
 	                <p></p>
 			            <div class="form-group">
 			                <select class="form-control" name='searchField'>
-			                    <option value='title'>제목</option>
-			                    <option value='author'>작가</option>
+			                    <option value='title' ${pageDto.cri.searchField == 'title'?'selected':'' }>제목</option>
+			                    <option value='author' ${pageDto.cri.searchField == 'author'?'selected':'' }>작가</option>
 			                </select>
 			            </div>
 			            <div class="form-group">
-			                <input class="form-control" name='searchWord'>
+			                <input class="form-control" name='searchWord' value="${pageDto.cri.searchWord }">
 			            </div>
 			            <button type="submit" class="btn btn-default">검색</button>
 			        </div>
@@ -63,7 +63,9 @@
 	                        </c:forEach>
 	                        </tbody>
 	                    </table>
-	           <%@include file="../common/pageNavi.jsp" %>
+	                    <div class="text-center">
+	           			<%@include file="../common/pageNavi.jsp" %>
+	           			</div>
 	                    <!-- /.table-responsive -->
 	                </div>
 	                <!-- /.panel-body -->

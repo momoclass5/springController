@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class BookVO {
-	private String no;		// 도서 일련번호
+	private int no;		// 도서 일련번호
 	private String title;	// 도서명
 	private String author;	// 작가
 

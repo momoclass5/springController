@@ -12,4 +12,6 @@ import com.momo.vo.Criteria;
 public interface BookService {
 	// 추상메서드 -> 미완성
 	public List<BookVO> getList(Criteria cri, Model model);
+	
+	public BookVO getOne(int no, Model model); 
 }

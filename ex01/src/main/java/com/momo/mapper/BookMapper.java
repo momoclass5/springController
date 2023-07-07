@@ -10,4 +10,6 @@ public interface BookMapper {
 	public List<BookVO> getList(Criteria cri);
 
 	public int getTotalCnt(Criteria cri);
+	
+	public BookVO getOne(int no);
 }

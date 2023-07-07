@@ -18,10 +18,13 @@
 	<!-- 페이지 블럭 생성 -->
 	<nav aria-label="Page navigation example">
 	
+	
 	  <ul class="pagination justify-content-end">
 	    <li class="page-item ${pageDto.prev?'':'disabled' }">
-	      <a class="page-link" 
+	      <a class="page-link"
+	      		<c:if test="${pageDto.prev}">
 	      		onclick="go(${pageDto.startNo-1 })"
+	      		</c:if>
 	      		href="#">Previous</a>
 	    </li>
 	    

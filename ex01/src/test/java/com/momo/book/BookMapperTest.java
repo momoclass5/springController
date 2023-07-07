@@ -41,6 +41,13 @@ public class BookMapperTest {
 		System.out.println("총건수 : " + res);
 	}
 	
+	@Test
+	public void getOne() {
+		BookVO board = bookMapper.getOne(1193);
+		System.out.println(board);
+		
+	}
+	
 }
 
 

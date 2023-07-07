@@ -35,4 +35,10 @@ public class BookController {
 		// return "/book/list";
 		// -> WEB-INF/views/book/list.jsp
 	}
+	
+	@GetMapping("view")
+	public void getOne(BookVO book, Model model) {
+		bookService.getOne(book.getNo(), model);
+	}
+	
 }
