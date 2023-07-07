@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.momo.mapper.BookMapper;
 import com.momo.vo.BookVO;
+import com.momo.vo.Criteria;
 
 import lombok.extern.log4j.Log4j;
 
@@ -26,12 +27,38 @@ public class BookMapperTest {
 	@Test
 	public void getList() {
 		//assertNotNull(bookMapper);
+		Criteria cri = new Criteria();
+		cri.setSearchField("title");
+		cri.setSearchWord("제목");
 		
-		List<BookVO> list = bookMapper.getList();
+		List<BookVO> list = bookMapper.getList(cri);
 		log.info(list);
 	}
 	
+	@Test
+	public void getTotalCnt() {
+		int res = bookMapper.getTotalCnt(new Criteria());
+		System.out.println("총건수 : " + res);
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

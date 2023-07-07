@@ -7,9 +7,56 @@
 <mapper namespace="com.momo.mapper.BookMapper">
 
 	<select id="getList" resultType="com.momo.vo.BookVO">
-		select no, title, rentyn, author
-        		, decode(rentyn,'Y','대여중','') rentynStr
-		  from book
-		 order by no desc
+	select *
+	  from (
+	  		select t.*, rownum rn 
+	  		  from (	  		  	
+					select no, title, rentyn, author
+			        		, decode(rentyn,'Y','대여중','') rentynStr
+					  from book
+					 where 1=1
+					 <include refid="criteria"></include>
+					 order by no desc
+	  		  ) t
+	  )
+	  where rn between #{startNo} and #{endNo}
+	
 	</select>
+	
+	<select id="getTotalCnt" resultType="int">
+		select count(*) 
+		  from book
+		 where 1=1
+		 <include refid="criteria"></include>
+	</select>
+	
+	
+	<sql id="criteria">
+		<choose>
+			<when test="searchField == 'title'">
+				and title like '%'||#{searchWord}||'%'
+			</when>
+			
+			<when test="searchField == 'author'">
+				and author like '%'||#{searchWord}||'%'
+			</when>
+		</choose>
+	</sql>
+	
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
