@@ -97,8 +97,9 @@
 				
 		// prev 버튼
 		if(pageDto.prev){
-			pageBlock +=
-				+ '    <li class="page-item disabled">'
+			pageBlock += ''
+				+ '    <li class="page-item" ' 
+				+ '			onclick="getPage('+ (pageDto.startNo-1) +')">'
 				+ '      <span class="page-link">Previous</span>'
 				+ '    </li>';
 		}
@@ -108,13 +109,15 @@
 			let activeStr =  (pageDto.cri.pageNo == i)? 'active':''; 
 			// 페이지 번호 생성 (반복문 startNo~endNo)		
 			pageBlock +=		
-				'    <li class="page-item ' + activeStr + '" onclick="getPage('+ i +')">'
+				'    <li class="page-item ' + activeStr + '" '
+				+ '			onclick="getPage('+ i +')">'
 				+ '		<a class="page-link" href="#">'+ i +'</a></li>';
 				
 		}
 		if(pageDto.next){
 			pageBlock += ''
-				+ '    <li class="page-item">'
+				+ '    <li class="page-item"'
+				+ ' 		onclick="getPage('+ (pageDto.endNo+1) +')">'
 				+ '      <a class="page-link" href="#">Next</a>'
 				+ '    </li>';	
 		}
