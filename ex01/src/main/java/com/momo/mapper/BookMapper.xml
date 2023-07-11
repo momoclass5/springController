@@ -48,6 +48,7 @@
 		  from book
 		 where no=#{no} 
 	</select>
+	
 </mapper>
 
 
