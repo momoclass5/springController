@@ -48,6 +48,11 @@ window.addEventListener('load',function(){
 		viewForm.submit();
 	});
 	
+	// 답글등록 버튼
+	btnReplyWrite.addEventListener('click', function(){
+		replyWrite();
+	});
+	
 	// 댓글목록 조회및 출력
 	getReplyList();
 	
@@ -102,7 +107,19 @@ window.addEventListener('load',function(){
     
   </div>
   <p></p>
-  
+  <input type="text" id="replyer" value="작성자">
+  <div class="input-group">
+  	<span class="input-group-text">답글작성</span>
+  	<input type="text" 
+  				aria-label="First name" 
+  				class="form-control"
+  				id="reply">
+  	<input type="button" 
+			  	id="btnReplyWrite" 
+			  	aria-label="Last name" 
+			  	class="input-group-text" 
+			  	value="등록하기">
+  </div>
   <!-- 댓글 리스트 -->
   <div id="replyDiv"></div>
   
