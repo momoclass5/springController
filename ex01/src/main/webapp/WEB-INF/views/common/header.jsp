@@ -9,7 +9,8 @@
 	<script type="text/javascript">
 		let msg = '${msg}';
 		
-		window.onload = function(){
+		window.addEventListener('load',function(){
+		//window.onload = function(){
 			if(msg != ''){
 				// 메세지 출력
 				document.querySelector(".modal-body").innerHTML = msg;
@@ -23,8 +24,8 @@
 				// 모달 보여주기
 				myModal.show();
 			}
-			
-		}
+		//}
+		})
 	</script>
 <body>
 

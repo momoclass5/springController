@@ -92,14 +92,19 @@ public class ReplyController {
 	public Map<String, Object> insert(@RequestBody ReplyVO vo){
 		log.info("================= insert");
 		log.info("replyVO" + vo);
-		
-		int res = service.insert(vo);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		if(res>0) {
-			map.put("result", "success");
-		} else {
+		try {
+			
+			int res = service.insert(vo);
+			
+			if(res>0) {
+				map.put("result", "success");
+			} else {
+				map.put("result", "fail");
+				map.put("message", "댓글 등록중 예외사항이 발생 하였습니다.");
+			}
+		}catch(Exception e){
 			map.put("result", "fail");
 			map.put("message", "댓글 등록중 예외사항이 발생 하였습니다.");
 		}
