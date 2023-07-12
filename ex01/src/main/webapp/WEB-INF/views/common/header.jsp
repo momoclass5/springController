@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://kit.fontawesome.com/ba30180671.js" crossorigin="anonymous"></script>
 </head>
 	<script type="text/javascript">
 		let msg = '${msg}';
