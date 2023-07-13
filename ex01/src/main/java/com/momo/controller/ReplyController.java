@@ -25,7 +25,7 @@ import lombok.extern.log4j.Log4j;
  */
 @RestController
 @Log4j
-public class ReplyController {
+public class ReplyController extends CommonRestController {
 
 	@Autowired
 	ReplyService service;
@@ -44,12 +44,6 @@ public class ReplyController {
 	public Map<String, Object> getList(@PathVariable("bno") int bno
 								, @PathVariable("page") int page){
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		
-		log.info("bno : " + bno);
-		log.info("page : " + page);
-		
 		Criteria cri = new Criteria();
 		cri.setPageNo(page);
 		
@@ -60,23 +54,14 @@ public class ReplyController {
 		// 페이지블럭을 생성
 		PageDto pageDto = new PageDto(cri, totalCnt);
 		
-		map.put("list", list);
-		map.put("pageDto", pageDto);
+		return responseListMap(list, pageDto);
 		
-		return map;
 	}
 	
 	@GetMapping("/reply/delete/{rno}")
 	public Map<String, Object> delete(@PathVariable("rno") int rno){
-		Map<String, Object> map = new HashMap<String, Object>();
-		int res = service.delete(rno);
-		if(res > 0) {
-			map.put("result", "success");
-		} else {
-			map.put("result", "fail");
-			map.put("message", "댓글 삭제중 예외사항이 발생 하였습니다.");
-		}
-		return map;
+		
+		return responseDeleteMap(service.delete(rno));
 	}
 	
 	
@@ -92,17 +77,15 @@ public class ReplyController {
 	public Map<String, Object> insert(@RequestBody ReplyVO vo){
 		log.info("================= insert");
 		log.info("replyVO" + vo);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		try {
 			int res = service.insert(vo);
 			
-			if(res>0) {
-				map.put("result", "success");
-			} else {
-				map.put("result", "fail");
-				map.put("message", "댓글 등록중 예외사항이 발생 하였습니다.");
-			}			
+			return map = responseWriteMap(res);
+			
+					
 		}catch (Exception e) {
 			map.put("result", "fail");
 			map.put("message", e.getMessage());
@@ -113,19 +96,10 @@ public class ReplyController {
 	
 	@PostMapping("/reply/editAction")
 	public Map<String, Object> update(@RequestBody ReplyVO vo){
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		int res = service.update(vo);
-		if(res>0) {
-			map.put("result", "success");
-		} else {
-			map.put("result", "fail");
-			map.put("message", "댓글 수정중 예외사항이 발생 하였습니다.");
-		}
-		
-		return map;
+		return responseEditMap(service.update(vo));
 	}
 	
+
 }
 
 

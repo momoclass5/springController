@@ -1,5 +1,7 @@
 package com.momo.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,9 +28,12 @@ public class MemberController {
 	
 	
 	@PostMapping("/loginAction")
-	public String loginAction(Member member, Model model) {
+	public String loginAction(Member member, Model model, HttpSession session) {
 		System.out.println("id : " + member.getId());
 		System.out.println("pw : " + member.getPw());
+
+		session.setAttribute("member", member);
+		session.setAttribute("userId", member.getId());
 		
 		service.login(member, model);
 		//model.addAttribute("message", member.getId() + "환영합니다.");
