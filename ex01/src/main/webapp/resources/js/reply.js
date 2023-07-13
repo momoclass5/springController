@@ -36,9 +36,19 @@ function fetchPost(url, obj, callback){
 
 
 // 댓글 조회및 출력
-function getReplyList(){
+function getReplyList(page){
+	
+	/**
+	 * falsey : false, 0, "", NaN, undefined, null
+	 * falsey한 값 이외의 값이 들어 있으면  true를 반환
+	 * 
+	 * page에 입력된 값이 없으면 1을 세팅
+	 */
+	if(!page){
+		page = 1;
+	}
+	
 	let bno = document.querySelector('#bno').value;
-	let page = 1;
 	console.log('bno : ', bno);
 	
 	console.log('/reply/list/' + bno + '/' + page);
@@ -102,19 +112,35 @@ function replyView(map){
 		// 페이지 블럭 생성
 		let pageBlock = 
 				  `<nav aria-label="...">                                                 `
-				+ `  <ul class="pagination justify-content-center">                                              `
-				+ `    <li class="page-item disabled">                                    `
+				+ `  <ul class="pagination justify-content-center">                       `;
+			
+		if(pageDto.prev){
+			// prev 버튼
+			pageBlock += `    <li class="page-item disabled"`
+				+ ` 					onclick="getReplyList(${pageDto.startNo-1})">                                    `
 				+ `      <a class="page-link">Previous</a>                                `
-				+ `    </li>                                                              `
-				+ `    <li class="page-item"><a class="page-link" href="#">1</a></li>     `
-				+ `    <li class="page-item active" aria-current="page">                  `
-				+ `      <a class="page-link" href="#">2</a>                              `
-				+ `    </li>                                                              `
-				+ `    <li class="page-item"><a class="page-link" href="#">3</a></li>     `
-				+ `    <li class="page-item">                                             `
+				+ `    </li>                                                              `;
+		}
+		
+		for(let i=pageDto.startNo; i<=pageDto.endNo; i++){
+			let active = pageDto.cri.pageNo == i ? 'active' : '';
+			// 페이지 버튼 startNo ~ endNo
+			pageBlock += `    <li class="page-item ${active}" onclick="getReplyList(${i})">`
+						+ `		<a class="page-link" href="#">`
+						+ `		${i}`
+						+ `		</a></li>     `;
+		}
+		
+		if(pageDto.next){
+			// next 버튼
+			pageBlock += `    <li class="page-item" `
+				+ `						onclick="getReplyList(${pageDto.endNo+1})">                                             `
 				+ `      <a class="page-link" href="#">Next</a>                           `
-				+ `    </li>                                                              `
-				+ `  </ul>                                                                `
+				+ `    </li>                                                              `;
+		}
+
+				
+		pageBlock += `  </ul>                                                                `
 				+ `</nav>                                                                 `;
 			                                                                      
 		replyDiv.innerHTML += pageBlock;	
