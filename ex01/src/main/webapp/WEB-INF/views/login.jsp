@@ -121,13 +121,21 @@
         z-index: 2;
       }
 
-      .form-signin input[type="text"], input[type="email"] {
+	  .middle{
+	    border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        margin-bottom: -1px;
+        
+	  }
+      #start  {
         margin-bottom: -1px;
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
       }
-
-      .form-signin input[type="password"] {
+	  
+      #end  {
         margin-bottom: 10px;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
@@ -161,11 +169,11 @@
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
     <div class="form-floating">
-      <input type="text" class="form-control" id="id" placeholder="Password">
+      <input id="start" type="text" class="form-control" id="id" placeholder="Password">
       <label for="id">id</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="pw" placeholder="Password">
+      <input id="end" type="password" class="form-control" id="pw" placeholder="Password">
       <label for="pw">Password</label>
     </div>
 
@@ -183,12 +191,16 @@
     <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
 
     <div class="form-floating">
-      <input type="text" class="form-control" id="id" placeholder="id">
+      <input id="start" type="text" class="form-control" id="id" placeholder="id">
       <label for="id">id</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="pw" placeholder="Password">
+      <input type="password" class="form-control middle" id="pw" placeholder="Password">
       <label for="pw">Password</label>
+    </div>
+    <div class="form-floating">
+      <input id="end" type="password" class="form-control" id="pwCheck" placeholder="Password">
+      <label for="pwCheck">PasswordCheck</label>
     </div>
     
     <button class="w-100 btn btn-lg btn-primary" id='btnSignup' type="submit">회원가입</button>
