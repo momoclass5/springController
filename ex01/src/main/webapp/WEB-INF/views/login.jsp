@@ -145,8 +145,26 @@
 		})
 		
 		signUpId.addEventListener('blur', function(){
-			alert('blur');
+			
+			// 입력체크
+			if(!signUpId.value){
+				signupMsg.innerHTML = '아이디를 입력 해주세요';
+				return;
+			}
+			
+			// 파라메터 세팅
+			let obj={ id : signUpId.value };
+			console.log("아이디 체크", obj);
+			
 			// 아이디 체크 -> 서버에 다녀와야 해요
+			fetchPost('/idCheck', obj, (map)=>{
+		    	  if(map.result == 'success'){
+		    		  idCheckRes.value='1'; // 아이디 사용 가능
+		    	  } else {
+		    		  idCheckRes.value='0'; // 아이디 사용 불가능
+		    	  }
+		   		  signupMsg.innerHTML = map.msg; // 메세지 출력
+		    });
 		});
     	
         pwCheck.addEventListener('blur', function(){
@@ -166,6 +184,8 @@
 		}
 		console.log(map);
 	  }
+      
+      
     </script>
     <script type="text/javascript" src="/resources/js/common.js"></script>
   </head>
@@ -199,9 +219,9 @@
   
   <!-- 회원가입폼 -->
   <form name='signupForm' style='display:none'>
-    <img class="mb-4" src="/resources/css/bootstrap-logo.svg" alt="" width="72" height="57">
+  	<img class="mb-4" src="/resources/css/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
-
+	<div id="signupMsg"></div>
     <div class="form-floating">
       <input type="text" class="form-control start" id="signUpId" placeholder="id">
       <label for="id">id</label>
@@ -217,6 +237,11 @@
     
     <button class="w-100 btn btn-lg btn-primary" id='btnSignup' type="submit">회원가입</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
+    
+    
+    <input type="text" value="0" id="idCheckRes">
+  	<input type="text" value="0" id="pwCheckRes">
+  
   </form>
 
   <button id='btnSignupView'>회원가입</button>

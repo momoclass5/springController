@@ -63,9 +63,9 @@ public class MemberController extends CommonRestController{
 		int res = service.idCheck(member);
 		
 		if(res == 0){
-			return responseMap(REST_SUCCESS, "아이디 중복체크 성공");
+			return responseMap(REST_SUCCESS, "사용가능한 아이디 입니다.");
 		} else {
-			return responseMap(REST_FAIL, "아이디 중복체크 실패");
+			return responseMap(REST_FAIL, "이미 사용중인 아이디 입니다.");
 		}
 		
 		
