@@ -1,38 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script type="text/javascript">
-	window.addEventListener('load', function(){
-		btnLogin.addEventListener('click', function(e){
-			// 기본이벤트 재거
-			e.preventDefault();
-			
-			// 파라메터 수집
-			let obj={
-				id : document.querySelector('#id').value
-				, pw : document.querySelector('#pw').value 
-			}
-			
-			console.log(obj);
-			
-			// 요청
-			fetchPost('/loginAction', obj, loginCheck)
-		})
-		
-	})
-	
-	function loginCheck(map){
-		// 로그인 성공 -> list 로 이동
-		// 실패 -> 메세지 처리
-		if(map.result == 'success'){
-			location.href="/board/list"
-		} else {
-			msg.innerHTML="map.msg"
-		}
-		console.log(map);
-	}
-	
-	
-</script>    
+   
     
 <!doctype html>
 <html lang="en">
@@ -129,13 +97,14 @@
         margin-bottom: -1px;
         
 	  }
-      #start  {
+	  
+      .start  {
         margin-bottom: -1px;
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
       }
 	  
-      #end  {
+      .end  {
         margin-bottom: 10px;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
@@ -146,19 +115,49 @@
 
       window.addEventListener('load',function(){
         
+    	// 로그인 폼 출력
         btnSigninView.addEventListener('click',function(){
           signupForm.style.display='none';
           signinForm.style.display='';
         })
-
+		
+        // 회원가입폼 출력
         btnSignupView.addEventListener('click',function(){
           signupForm.style.display='';
           signinForm.style.display='none';
         })
+        
+        // 로그인
+        btnSignin.addEventListener('click', function(e){
+			// 기본이벤트 재거
+			e.preventDefault();
+			
+			// 파라메터 수집
+			let obj={
+				id : document.querySelector('#id').value
+				, pw : document.querySelector('#pw').value 
+			}
+			
+			console.log(obj);
+			
+			// 요청
+			fetchPost('/loginAction', obj, loginCheck)
+		})
 
       })
+      
+      function loginCheck(map){
+		// 로그인 성공 -> list 로 이동
+		// 실패 -> 메세지 처리
+		if(map.result == 'success'){
+			location.href="/board/list";
+		} else {
+			msg.innerHTML=map.msg;
+		}
+		console.log(map);
+	  }
     </script>
-    
+    <script type="text/javascript" src="/resources/js/common.js"></script>
   </head>
   <body class="text-center">
     
@@ -167,13 +166,14 @@
   <form name='signinForm'>
     <img class="mb-4" src="/resources/css/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
+	<div id="msg"></div>
+	
     <div class="form-floating">
-      <input id="start" type="text" class="form-control" id="id" placeholder="Password">
+      <input type="text" class="form-control start" required="required" id="id" placeholder="Password">
       <label for="id">id</label>
     </div>
     <div class="form-floating">
-      <input id="end" type="password" class="form-control" id="pw" placeholder="Password">
+      <input type="password" class="form-control end" required="required" id="pw" placeholder="Password">
       <label for="pw">Password</label>
     </div>
 

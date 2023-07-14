@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.momo.mapper.MemberMapper;
+import com.momo.service.MemberService;
 import com.momo.vo.Member;
 
 import lombok.extern.log4j.Log4j;
@@ -17,10 +18,10 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-public class MemberTest {
+public class MemberServiceTest {
 	
 	@Autowired
-	MemberMapper memberMapper;
+	MemberService memberService;
 	
 	@Test
 	public void test() {
@@ -28,7 +29,7 @@ public class MemberTest {
 		member.setId("admin");
 		member.setPw("1234");
 		
-		member = memberMapper.login(member);
+		member = memberService.login(member);
 		
 		log.info(member);
 		assertNotNull(member);
@@ -37,11 +38,11 @@ public class MemberTest {
 	@Test
 	public void testInsert() {
 		Member member = new Member();
-		member.setId("test1");
+		member.setId("test3");
 		member.setPw("1234");
-		member.setName("name1");
+		member.setName("name2");
 		
-		int res = memberMapper.insert(member);		
+		int res = memberService.insert(member);		
 		
 		assertEquals(1, res);
 	}
@@ -49,9 +50,9 @@ public class MemberTest {
 	@Test
 	public void testIdCheck() {
 		Member member = new Member();
-		member.setId("test");
+		member.setId("test2");
 		
-		int res = memberMapper.idCheck(member);		
+		int res = memberService.idCheck(member);		
 		
 		assertEquals(1, res);
 	}
