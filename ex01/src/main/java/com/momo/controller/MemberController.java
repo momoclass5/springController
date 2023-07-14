@@ -68,10 +68,14 @@ public class MemberController extends CommonRestController{
 			return responseMap(REST_FAIL, "이미 사용중인 아이디 입니다.");
 		}
 		
-		
-		
 	}
-	
+
+	@PostMapping("/register")
+	public @ResponseBody Map<String, Object> 
+						register(@RequestBody Member member) {
+		int res = service.insert(member);
+		return responseWriteMap(res);
+	}
 }
 
 

@@ -160,17 +160,74 @@
 			fetchPost('/idCheck', obj, (map)=>{
 		    	  if(map.result == 'success'){
 		    		  idCheckRes.value='1'; // 아이디 사용 가능
+		    		  signUpPw.focus();
 		    	  } else {
 		    		  idCheckRes.value='0'; // 아이디 사용 불가능
+		    		  signUpId.focus();
+		    		  signUpId.value='';
 		    	  }
 		   		  signupMsg.innerHTML = map.msg; // 메세지 출력
 		    });
 		});
     	
         pwCheck.addEventListener('blur', function(){
-			alert('blur');
-			// 비밀번호 체크 -> 안가도 되요
+			
+			if(!signUpPw.value){
+				signupMsg.innerHTML = '비밀번호를 입력해주세요';
+				return;
+			}
+			if(!pwCheck.value){
+				signupMsg.innerHTML = '비밀번호 확인을 입력해주세요';
+				return;
+			}
+			if(signUpPw.value == pwCheck.value){
+				pwCheckRes.value=1;
+				signupMsg.innerHTML='';
+			} else{
+				signupMsg.innerHTML = '비밀번호가 일치하지 않습니다.';
+				pwCheckRes.value=0;
+				signUpPw.focus();
+				pwCheck.value='';
+				signUpPw.value='';
+			}
 		});
+        
+        btnSignup.addEventListener('click', function(e){
+        	// 기본 이벤트 초기화
+        	e.preventDefault();
+        	
+        	let id = signUpId.value;
+        	let pw = signUpPw.value;
+        	let name = signUpName.value;
+        	
+        	if(!id){
+        		signupMsg.innerHTML = '아이디를 입력해주세요';
+        		return;
+        	}
+        	if(!pw){
+        		signupMsg.innerHTML = '비밀번호를 입력해주세요';
+        		return;
+        	}
+        	if(!name){
+        		signupMsg.innerHTML = '이름을 입력해주세요';
+        		return;
+        	}
+        	
+        	obj = {
+        			id : id
+        			, pw : pw
+        			, name : name
+        	}
+        	
+        	console.log('회원가입 obj : ', obj);
+        	
+        	// 회원가입 요청
+        	fetchPost('/register'
+        				, obj
+        				, (map)=>{
+					        		console.log(map);
+					        	});
+        })
 
       })
       
@@ -224,11 +281,15 @@
 	<div id="signupMsg"></div>
     <div class="form-floating">
       <input type="text" class="form-control start" id="signUpId" placeholder="id">
-      <label for="id">id</label>
+      <label for="signUpId">id</label>
+    </div>
+    <div class="form-floating">
+      <input type="text" class="form-control middle" id="signUpName" placeholder="name">
+      <label for="signUpName">name</label>
     </div>
     <div class="form-floating">
       <input type="password" class="form-control middle" id="signUpPw" placeholder="Password">
-      <label for="pw">Password</label>
+      <label for="signUpPw">Password</label>
     </div>
     <div class="form-floating">
       <input type="password" class="form-control end" id="pwCheck" placeholder="Password">
