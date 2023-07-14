@@ -143,6 +143,16 @@
 			// 요청
 			fetchPost('/loginAction', obj, loginCheck)
 		})
+		
+		signUpId.addEventListener('blur', function(){
+			alert('blur');
+			// 아이디 체크 -> 서버에 다녀와야 해요
+		});
+    	
+        pwCheck.addEventListener('blur', function(){
+			alert('blur');
+			// 비밀번호 체크 -> 안가도 되요
+		});
 
       })
       
@@ -163,13 +173,14 @@
     
 <main class="form-signin w-100 m-auto">
 
+  <!-- 로그인폼 -->
   <form name='signinForm'>
     <img class="mb-4" src="/resources/css/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 	<div id="msg"></div>
 	
     <div class="form-floating">
-      <input type="text" class="form-control start" required="required" id="id" placeholder="Password">
+      <input type="text" class="form-control start" required="required" id="id" placeholder="id">
       <label for="id">id</label>
     </div>
     <div class="form-floating">
@@ -186,20 +197,21 @@
     <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
   </form>
   
+  <!-- 회원가입폼 -->
   <form name='signupForm' style='display:none'>
     <img class="mb-4" src="/resources/css/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
 
     <div class="form-floating">
-      <input id="start" type="text" class="form-control" id="id" placeholder="id">
+      <input type="text" class="form-control start" id="signUpId" placeholder="id">
       <label for="id">id</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control middle" id="pw" placeholder="Password">
+      <input type="password" class="form-control middle" id="signUpPw" placeholder="Password">
       <label for="pw">Password</label>
     </div>
     <div class="form-floating">
-      <input id="end" type="password" class="form-control" id="pwCheck" placeholder="Password">
+      <input type="password" class="form-control end" id="pwCheck" placeholder="Password">
       <label for="pwCheck">PasswordCheck</label>
     </div>
     

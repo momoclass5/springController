@@ -56,6 +56,22 @@ public class MemberController extends CommonRestController{
 		
 	}
 	
+	@PostMapping("/idCheck")
+	public @ResponseBody Map<String, Object> 
+						idCheck(@RequestBody Member member){
+
+		int res = service.idCheck(member);
+		
+		if(res == 0){
+			return responseMap(REST_SUCCESS, "아이디 중복체크 성공");
+		} else {
+			return responseMap(REST_FAIL, "아이디 중복체크 실패");
+		}
+		
+		
+		
+	}
+	
 }
 
 

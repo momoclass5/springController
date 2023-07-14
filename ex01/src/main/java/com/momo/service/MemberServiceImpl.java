@@ -13,6 +13,8 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	MemberMapper memberMapper;
 
+	@Autowired
+	BCryptPasswordEncoder encoder;
 	@Override
 	public Member login(Member member) {
 		return memberMapper.login(member);
@@ -21,9 +23,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int insert(Member member) {
 		
+//		BCryptPasswordEncoder encoder 
+//						= new BCryptPasswordEncoder();
+		
 		// 비밀번호 암호화
-		BCryptPasswordEncoder encoder 
-						= new BCryptPasswordEncoder();
 		member.setPw(encoder.encode(member.getPw()));
 		System.out.println("pw : " + member.getPw());
 		return memberMapper.insert(member);
