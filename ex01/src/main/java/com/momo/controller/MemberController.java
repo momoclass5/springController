@@ -73,8 +73,14 @@ public class MemberController extends CommonRestController{
 	@PostMapping("/register")
 	public @ResponseBody Map<String, Object> 
 						register(@RequestBody Member member) {
-		int res = service.insert(member);
-		return responseWriteMap(res);
+		try {
+			int res = service.insert(member);
+			return responseWriteMap(res);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return responseMap(REST_FAIL, "등록중 예외사항이 발생 하였습니다.");
+		}
 	}
 }
 

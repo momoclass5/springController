@@ -160,7 +160,7 @@
 			fetchPost('/idCheck', obj, (map)=>{
 		    	  if(map.result == 'success'){
 		    		  idCheckRes.value='1'; // 아이디 사용 가능
-		    		  signUpPw.focus();
+		    		  signUpName.focus();
 		    	  } else {
 		    		  idCheckRes.value='0'; // 아이디 사용 불가능
 		    		  signUpId.focus();
@@ -225,8 +225,12 @@
         	fetchPost('/register'
         				, obj
         				, (map)=>{
-					        		console.log(map);
-					        	});
+					        if(map.result == 'success'){
+					        	location.href='/login?msg='+map.msg;
+					        } else {
+					        	signupMsg.innerHTML = map.msg;
+					        }
+					  });
         })
 
       })
@@ -254,7 +258,7 @@
   <form name='signinForm'>
     <img class="mb-4" src="/resources/css/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-	<div id="msg"></div>
+	<div id="msg">${param.msg }</div>
 	
     <div class="form-floating">
       <input type="text" class="form-control start" required="required" id="id" placeholder="id">
