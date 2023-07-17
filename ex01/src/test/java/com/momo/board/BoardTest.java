@@ -114,6 +114,15 @@ public class BoardTest {
 		
 		log.info("totalCnt : " + res);
 	}
+	
+	
+	@Test
+	public void updateReplyCnt() {
+		int res = boardMapper.updateReplyCnt(83, 1);
+		
+		assertEquals(1, res);
+		
+	}
 }
 
 

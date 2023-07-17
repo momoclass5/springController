@@ -43,6 +43,12 @@
 		  from tbl_reply
 		 where bno=#{bno}
 	</select>
+	
+	<select id="getOne" resultType="com.momo.vo.ReplyVO">
+		select *
+		  from tbl_reply
+		 where rno=#{rno}
+	</select>
 </mapper>
 
 
