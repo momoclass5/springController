@@ -213,6 +213,20 @@
         		return;
         	}
         	
+        	// 아이디 중복체크 확인
+        	if(idCheckRes.value != 1){
+        		signupMsg.innerHTML = '아이디 중복체크를 해주세요';
+        		signUpId.focus();
+        		return;
+        	}
+        	
+        	// 비밀번호 일치 확인
+        	if(idCheckRes.value != 1){
+        		signupMsg.innerHTML = '비밀번호가 일치하는지 확인 해주세요';
+        		pwCheck.focus();
+        		return;
+        	}
+        	
         	obj = {
         			id : id
         			, pw : pw
@@ -239,7 +253,7 @@
 		// 로그인 성공 -> list 로 이동
 		// 실패 -> 메세지 처리
 		if(map.result == 'success'){
-			location.href="/board/list";
+			location.href=map.url;
 		} else {
 			msg.innerHTML=map.msg;
 		}

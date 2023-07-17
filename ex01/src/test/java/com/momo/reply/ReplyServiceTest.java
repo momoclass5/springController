@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.momo.mapper.ReplyMapper;
 import com.momo.service.ReplyService;
+import com.momo.vo.Criteria;
 import com.momo.vo.ReplyVO;
 
 import lombok.extern.log4j.Log4j;
@@ -27,7 +28,7 @@ public class ReplyServiceTest {
 	@Test
 	public void test() {
 		assertNotNull(service);
-		List<ReplyVO> list = service.getList(83);
+		List<ReplyVO> list = service.getList(83, new Criteria());
 		log.info("======================");
 		log.info("list : " + list);
 	}

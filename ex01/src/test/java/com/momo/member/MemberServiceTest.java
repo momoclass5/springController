@@ -38,9 +38,9 @@ public class MemberServiceTest {
 	@Test
 	public void testInsert() {
 		Member member = new Member();
-		member.setId("test5");
+		member.setId("admin");
 		member.setPw("1234");
-		member.setName("name2");
+		member.setName("admin");
 		
 		int res = memberService.insert(member);		
 		

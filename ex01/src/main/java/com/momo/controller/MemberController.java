@@ -30,6 +30,11 @@ public class MemberController extends CommonRestController{
 		return "login";
 	}
 	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "login";
+	}
 	/*
 	 * json형식의 데이터를 주고 받고 싶어요 
 	 * 페이지를 갱신하지 않고 원하는 데이터만 요청
@@ -48,10 +53,21 @@ public class MemberController extends CommonRestController{
 		if(member != null) {
 			session.setAttribute("member", member);
 			session.setAttribute("userId", member.getId());
+			Map<String, Object> map = 
+					responseMap(REST_SUCCESS, "로그인 되었습니다.");
 			
-			return responseMap(1, "로그인");
+			if(member.getRole() != null 
+					&& member.getRole().contains("ADMIN_ROLE")) {
+				// 관리자 로그인 -> 관리자 페이지로 이동
+				map.put("url", "/admin");
+			} else {
+				map.put("url", "/board/list");
+			}
+			
+			return map;
+			
 		} else {
-			return responseMap(0, "로그인");
+			return responseMap(REST_FAIL, "아이디와 비밀번호를 확인해주세요");
 		}
 		
 	}
