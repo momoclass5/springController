@@ -86,6 +86,7 @@ public class LogAdvice {
 	 * 		
 	 * 		주업무로직을 실행 하기 위해	JoinPoint의 하위 클래스인 
 	 * 		ProceedingJoinPoint타입의	파라미터를 필수적으로 선언해야 함
+	 * 		타겟메서드를 실행결과를 반환 하기 위해서!!
 	 * 
 	 * @param pjp
 	 * @return
