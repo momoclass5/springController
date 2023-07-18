@@ -7,7 +7,6 @@
 
 <head>
 
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -46,6 +45,7 @@
   <div class="list-group w-auto">
     
     <c:forEach items="${list}" var="vo">
+today : ${vo.today }
     <a onclick="requestAction('/board/view', ${vo.bno })" href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
       <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
       <div class="d-flex gap-2 w-100 justify-content-between">

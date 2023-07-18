@@ -24,8 +24,8 @@
 	  from (
 	  		select t.*, rownum rn
 	  		  from (
-					select * 
-					  from tbl_board 
+					select b.*, sysdate today 
+					  from tbl_board b
 					 where bno>0
 	]]>
 					 <include refid="criteria"></include>

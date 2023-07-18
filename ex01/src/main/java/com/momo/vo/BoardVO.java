@@ -1,5 +1,7 @@
 package com.momo.vo;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
@@ -11,4 +13,5 @@ public class BoardVO {
 	private String writer;
 	private String regDate;
 	private String updateDate;
+	private Date today;
 }
