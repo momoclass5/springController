@@ -12,8 +12,12 @@
 	</insert>
 	
 	<select id="getList" resultType="com.momo.vo.FileuploadVO">
-		select * 
-		  from tbl_attach 
+		select t.*
+		        , uploadpath||uuid||'_'||filename savePath
+        		, decode(filetype, 'I'
+                			,'s_'||uploadpath||uuid||'_'||filename
+                			,'') s_savePath 
+		  from tbl_attach t
 		 where bno=#{bno}
 	
 	</select>

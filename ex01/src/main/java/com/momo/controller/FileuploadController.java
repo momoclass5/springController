@@ -2,6 +2,7 @@ package com.momo.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import com.momo.service.FileuploadService;
 import com.momo.vo.FileuploadVO;
 
 import lombok.extern.log4j.Log4j;
+import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 @Log4j
@@ -80,7 +82,27 @@ public class FileuploadController {
 				// file(원본파일)을 sFile(저장 대상 파일)에 저장
 				file.transferTo(sFile);
 				
+
 				FileuploadVO vo = new FileuploadVO();
+				// 주어진 파일의 Mime유형을 확인
+				String contentType = 
+								Files.probeContentType(sFile.toPath());
+
+				// Mime타입을 확인하여 이미지인 경우 썸네일을 생성
+				if(contentType.startsWith("image")) {
+					vo.setFiletype("I");
+					// 썸네일 생성 경로
+					String thmbnail = ATTACHES_DIR 
+										+ uploadpath 
+										+ "s_"
+										+ saveFileName;
+					// 썸네일 생성
+					// 원본파일, 크기, 저장될 경로
+					Thumbnails.of(sFile).size(100, 100).toFile(thmbnail);
+				} else {
+					vo.setFiletype("F");
+				}
+				
 				vo.setBno(bno);
 				vo.setFilename(file.getOriginalFilename());
 				vo.setFiletype("I");

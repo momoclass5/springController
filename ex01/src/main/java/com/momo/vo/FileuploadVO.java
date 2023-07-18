@@ -10,4 +10,10 @@ public class FileuploadVO {
 	private String filename;
 	private String filetype;
 	private int bno;
+	
+	// 저장된파일경로
+	private String savePath;
+	private String s_savePath;
+	
+	// uploadpath + uuid + "_" + filename;
 }

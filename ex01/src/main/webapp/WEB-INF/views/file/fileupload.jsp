@@ -21,12 +21,13 @@
 			.then(map => viewFileList(map));
 		
 	}
+	
 	function viewFileList(map){
 		console.log(map);
 		let content = '';
 		if(map.list.length > 0){
 			map.list.forEach(function(item, index){
-				content += item.filename + '<br>';
+				content += item.filename + '/' + item.savePath + '<br>';
 			})
 		} else {
 			content = '등록된 파일이 없습니다.';
@@ -37,7 +38,6 @@
 </script>
 </head>
 <body>
-res : ${param.msg }
 	<h2>파일 업로드</h2>
 	<form method="post" enctype="multipart/form-data" 
 			action="/file/fileuploadAction" name="fileuploadForm">
@@ -47,8 +47,10 @@ res : ${param.msg }
 	<input type="file" name="files"><br>		
 	<input type="file" name="files"><br>		
 	<input type="file" name="files"><br>
-	
+	<br>
 	<button type="submit">파일업로드</button>		
+	
+	res : ${param.msg }
 	
 	
 	</form>
