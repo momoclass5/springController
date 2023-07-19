@@ -8,11 +8,52 @@
 
 <script type="text/javascript">
 	window.addEventListener('load', function(){
+		// 리스트 조회
 		btnList.addEventListener('click', function(){
 			getFileList();
 		})
+		
+		// 파일 업로드
+		btnFileupload.addEventListener('click', function(){
+			// 웹 개발에서 HTML 폼 데이터를 
+			// JavaScript로 쉽게 조작하고 전송하는 방법을 제공하는 API입니다
+			let formData = new FormData(fileuploadForm);
+			formData.append('name', 'momo');
+			
+			console.log("formData : ", formData);
+			// FormData값 확인
+			for(var pair of formData.entries()){
+				if(typeof(pair[1]) == 'object'){
+					let fileName = pair[1].name;
+					let fileSize = pair[1].fileSize;
+					
+					
+					
+					console.log('fileName', fileName);
+					console.log('fileSize', fileSize);
+				}
+			}
+			
+			fetch('/file/fileuploadActionFetch'
+					, {
+						method:'post'
+						, body : formData
+					})
+					// 요청결과 json문자열을 javascript 객체로 반환
+					.then(response => response.json())
+					// 콜백함수 실행
+					.then(map => fileuploadRes(map));
+			
+				
+		});
 	})
 
+	function fileuploadRes(map){
+		if(map.result == 'success'){
+			divFileuploadRes.innerHTML = map.msg;
+		}
+	}
+	
 	function getFileList(){
 		///file/list/{bno}
 		let bno = document.querySelector("#bno").value;
@@ -49,9 +90,9 @@
 	<input type="file" name="files"><br>
 	<br>
 	<button type="submit">파일업로드</button>		
-	
+	<button type="button" id="btnFileupload">Fetch파일업로드</button>
 	res : ${param.msg }
-	
+	<div id="divFileuploadRes"></div>
 	
 	</form>
 	
