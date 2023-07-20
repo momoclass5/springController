@@ -12,4 +12,6 @@ public interface FileuploadService {
 	List<FileuploadVO> getList(int bno);
 	
 	int insert(FileuploadVO vo);
+	
+	int delete(int bno, String uuid);
 }

@@ -2,6 +2,8 @@ package com.momo.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.momo.vo.FileuploadVO;
 
 public interface FileuploadMapper {
@@ -14,4 +16,24 @@ public interface FileuploadMapper {
 	public List<FileuploadVO> getList(int bno);
 	
 	public int insert(FileuploadVO vo);
+	
+	public int delete(@Param("bno")int bno
+						, @Param("uuid") String uuid);
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

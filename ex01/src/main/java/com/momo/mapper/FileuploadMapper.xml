@@ -21,4 +21,28 @@
 		 where bno=#{bno}
 	
 	</select>
+	
+	<delete id="delete">	
+		delete tbl_attach 
+ 		 where bno = #{bno}
+   		   and uuid = #{uuid}
+	</delete>
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -48,6 +48,13 @@ public class FileuploadTest {
 		
 	}
 	
+	@Test
+	public void delete() {
+		log.info("delete()");
+		int res = mapper.delete(83
+						, "7b13fbbb-3f23-4b26-bb36-4f672f833741");
+		assertEquals(1, res);
+	}
 	
 }
 

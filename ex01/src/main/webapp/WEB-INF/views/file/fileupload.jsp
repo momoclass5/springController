@@ -8,6 +8,7 @@
 
 <script type="text/javascript">
 	window.addEventListener('load', function(){
+	
 		// 리스트 조회
 		btnList.addEventListener('click', function(){
 			getFileList();
@@ -48,7 +49,7 @@
 					.then(map => fileuploadRes(map));
 			
 				
-		});
+			});
 	})
 
 	function checkExtension(fileName, fileSize){
@@ -73,6 +74,10 @@
 	function fileuploadRes(map){
 		if(map.result == 'success'){
 			divFileuploadRes.innerHTML = map.msg;
+			// 게시글등록
+		} else {
+			alert(map.msg);
+			
 		}
 	}
 	
@@ -85,12 +90,43 @@
 		
 	}
 	
+	function attachFileDelete(e){
+		let bno = e.dataset.bno;
+		let uuid = e.dataset.uuid;
+		// 값이 유효하지 않은 경우 메세지 처리
+		// fetch 요청
+		//fetch('/file/delete/'+uuid+'/'+bno)
+		// el 표현식 -> \${ } (el 표현식으로 처리 하지 않음)
+		fetch(`/file/delete/\${uuid}/\${bno}`)
+			.then(response => response.json())
+			.then(map => fileDeleteRes(map));
+		
+	}
+	
+	// 삭제 결과 처리
+	function fileDeleteRes(map){
+		if(map.result == 'success'){
+			console.log(map.msg);
+			// 리스트 조회
+			getFileList();
+		} else {
+			alert(map.msg);
+		}
+	}
+	
 	function viewFileList(map){
 		console.log(map);
 		let content = '';
 		if(map.list.length > 0){
 			map.list.forEach(function(item, index){
-				content += item.filename + '<br>';
+			let savePath = encodeURIComponent(item.savePath);
+			content += "<a href='/file/download?fileName=" 
+				    + savePath+"'>"
+					+ item.filename + '</a>'
+					+ ' <i onclick="attachFileDelete(this)" '
+					+ '   data-bno="'+item.bno+'" data-uuid="'+item.uuid+'" '
+					+ '   class="fa-regular fa-square-minus"></i>'
+					+ '<br>';
 			})
 		} else {
 			content = '등록된 파일이 없습니다.';
@@ -98,7 +134,9 @@
 		divFileupload.innerHTML = content;
 		
 	}
+	
 </script>
+<script src="https://kit.fontawesome.com/ba30180671.js" crossorigin="anonymous"></script>
 </head>
 <body>
 	<h2>파일 업로드</h2>
