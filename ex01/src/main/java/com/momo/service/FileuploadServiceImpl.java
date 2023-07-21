@@ -38,6 +38,37 @@ public class FileuploadServiceImpl implements FileuploadService {
 	@Override
 	public int delete(int bno, String uuid) {
 		// 파일 삭제
+		// 삭제할 파일 조회
+		// 삭제
+		FileuploadVO vo = mapper.getOne(bno, uuid);
+		String savePath = vo.getSavePath();
+		String s_savePath = vo.getS_savePath();
+		System.out.println("savePath" + savePath);
+		System.out.println("s_savePath" + s_savePath);
+		
+		if(savePath != null && !savePath.equals("")) {
+			File file = new File(FileuploadController.ATTACHES_DIR
+									+ savePath);
+			
+			if(file.exists()) {
+				if(!file.delete()) {
+					System.err.println("path : " + savePath);
+					System.err.println("파일 삭제 실패!");
+				}
+			}
+		}
+		if(s_savePath != null && !s_savePath.equals("")) {
+			File file = new File(FileuploadController.ATTACHES_DIR
+									+ s_savePath);
+			
+			if(file.exists()) {
+				if(!file.delete()) {
+					System.err.println("path : " + savePath);
+					System.err.println("파일 삭제 실패!");
+				}
+			}
+		}
+		
 		
 		// 데이터 베이스에서 삭제
 		return mapper.delete(bno, uuid);

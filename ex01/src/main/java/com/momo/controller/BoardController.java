@@ -155,6 +155,7 @@ public class BoardController {
 	
 	@PostMapping("editAction")
 	public String editAction(BoardVO board
+								, List<MultipartFile> files
 								, Criteria cri
 								, RedirectAttributes rttr
 								, Model model) {
@@ -169,23 +170,33 @@ public class BoardController {
 		//${pageNo}
 		
 		// 수정
-		int res = boardService.update(board);
-		
-		if(res > 0) {
-			// redirect시 request 영역이 공유 되지 않으므로 
-			// RedirectAttributes를 이용 합니다. 
-			//model.addAttribute("msg", "수정 되었습니다.");
-			// ${msg}
-			rttr.addFlashAttribute("msg", "수정되었습니다.");
-			//?~~
-			rttr.addAttribute("pageNo", cri.getPageNo());
-			rttr.addAttribute("searchField", cri.getSearchField());
-			rttr.addAttribute("searchWord", cri.getSearchWord());
-			// 상세페이지로 이동
-			return "redirect:/board/view?bno=" + board.getBno();			
-		} else {
-			model.addAttribute("msg", "수정중 예외사항이 발생 하였습니다.");
-			return "/board/message";
+		int res;
+		try {
+			res = boardService.update(board, files);
+			
+			if(res > 0) {
+				// redirect시 request 영역이 공유 되지 않으므로 
+				// RedirectAttributes를 이용 합니다. 
+				//model.addAttribute("msg", "수정 되었습니다.");
+				// ${msg}
+				rttr.addFlashAttribute("msg", "수정되었습니다.");
+				//?~~
+				rttr.addAttribute("pageNo", cri.getPageNo());
+				rttr.addAttribute("searchField", cri.getSearchField());
+				rttr.addAttribute("searchWord", cri.getSearchWord());
+				// 상세페이지로 이동
+				return "redirect:/board/view?bno=" + board.getBno();			
+			} else {
+				model.addAttribute("msg", "수정중 예외사항이 발생 하였습니다.");
+				return "/board/message";
+			}
+		} catch (Exception e) {
+			if(e.getMessage().indexOf("첨부파일") > -1) {
+				model.addAttribute("msg", e.getMessage());
+			} else {
+				model.addAttribute("msg", "수정중 예외사항이 발생 하였습니다.");
+			}
+			return "/board/message";	
 		}
 		
 	}

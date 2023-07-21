@@ -95,8 +95,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int update(BoardVO board) {
-		return boardMapper.update(board);
+	public int update(BoardVO board, List<MultipartFile> files) 
+													throws Exception {
+		// 게시물 등록
+		int res = boardMapper.update(board);
+				
+		fileuploadService.fileupload(files, board.getBno());
+		return res;
 	}
 
 	@Override

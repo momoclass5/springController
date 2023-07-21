@@ -148,7 +148,8 @@
 	</div>
 	<div class="mb-3">
 	  <label for="writer" class="form-label">첨부파일</label>
-	  <input class="form-control" type="file" id="files" name="files">
+	  <input class="form-control" type="file" multiple="multiple" 
+	  				id="files" name="files">
 	</div>
 	
 	<!-- 첨부파일 -->

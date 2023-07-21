@@ -56,6 +56,14 @@ public class FileuploadTest {
 		assertEquals(1, res);
 	}
 	
+	@Test
+	public void getOne() {
+		log.info("getOne()");
+		FileuploadVO vo = mapper.getOne(83, "d6d7ed18-f974-4412-bca7-4127f6c6d1fa");
+		
+		System.out.println(vo);
+	}
+	
 }
 
 

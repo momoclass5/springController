@@ -19,13 +19,12 @@ public interface BoardService {
 	//public int insertSelectKey(BoardVO board);
 	public int insertSelectKey(BoardVO board, List<MultipartFile> files) 
 													throws Exception;
-	
 	public BoardVO getOne(int bno);
 	
 	public int delete(int bno);
 	
-	public int update(BoardVO board);
-	
+	public int update(BoardVO board, List<MultipartFile> files) 
+													throws Exception;
 	public int getTotalCnt(Criteria cri);
 	
 	public int updateReplyCnt(int bno, int amount);
