@@ -91,6 +91,11 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public int delete(int bno) {
+		// 게시물을 삭제시 첨부된 파일이 있는경우 오류가 발생
+		// 첨부파일을 모두 삭제
+		// 첨부파일 리스트 조회 - fileuploadService
+		// 리스트를 돌면서 
+		// 삭제 처리 - fileuploadService 
 		return boardMapper.delete(bno);
 	}
 

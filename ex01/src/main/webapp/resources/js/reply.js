@@ -90,12 +90,20 @@ function replyView(map){
 			replyDivStr +=  
 			  '    <tr id="tr'+reply.rno+'" data-value="'+reply.reply+'">                                    '
 			+ '      <th scope="row">' + reply.rno + '</th>                '
-			+ '      <td class="text-start">' + reply.reply 
-			+ ' 		<i class="fa-regular fa-pen-to-square"'
-			+ '				onclick="replyEdit('+ reply.rno +')"></i>'
-			+ '			<i class="fa-regular fa-trash-can" '
-			+ '				onclick="replyDelete('+ reply.rno +')"></i>'		
-			+ '		 </td>                         '
+			+ '      <td class="text-start">' + reply.reply; 
+
+			// replyer.value : 로그인한 아이디
+			// reply.replyer : 답글 작성자
+			if(replyer.value == reply.replyer){
+				replyDivStr +=
+				  ' 		<i class="fa-regular fa-pen-to-square"'
+				+ '				onclick="replyEdit('+ reply.rno +')"></i>'
+				+ '			<i class="fa-regular fa-trash-can" '
+				+ '				onclick="replyDelete('+ reply.rno +')"></i>';		
+			}
+			
+			replyDivStr +=
+			  '		 </td>                         '
 			+ '      <td>' + reply.replyer
 			+ '			<br>' + reply.replydate		
 			+ '		 </td>                         '

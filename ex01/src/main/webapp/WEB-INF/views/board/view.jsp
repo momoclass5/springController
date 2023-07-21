@@ -29,19 +29,21 @@
 <script type="text/javascript">
 
 window.addEventListener('load',function(){
-	
-	// 수정페이지로 이동
-	btnEdit.addEventListener('click',function(){
-		viewForm.action='/board/edit';
-		viewForm.submit();
-	});
-	
-	// 삭제 처리후 리스트 페이지로 이동
-	btnDelete.addEventListener('click', function(){
-		viewForm.action='/board/delete';
-		viewForm.submit();
-	});
-	
+	// 로그인한 아이디와 게시글의 작성자가 일치하면
+	// 수정, 삭제 버튼에 이벤트를 적용
+	if(${userId eq board.writer}){
+		// 수정페이지로 이동
+		btnEdit.addEventListener('click',function(){
+			viewForm.action='/board/edit';
+			viewForm.submit();
+		});
+		
+		// 삭제 처리후 리스트 페이지로 이동
+		btnDelete.addEventListener('click', function(){
+			viewForm.action='/board/delete';
+			viewForm.submit();
+		});
+	}
 	// 리스트 페이지로 이동
 	btnList.addEventListener('click', function(){
 		viewForm.action='/board/list';
@@ -141,21 +143,22 @@ function viewFileList(map){
 	</div>
 	
 	
-	
-	
-	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
-		<button type="button" id="btnEdit" 
-				class="btn btn-primary btn-lg">수정</button>
-				
-		<button type="button" id="btnDelete" 
-				class="btn btn-primary btn-lg">삭제</button>
-	</div>
-	
+	<!-- 로그인한 사용자의 아이디와 게시글의 작성자가 일치하면 버튼을 노출 -->
+	<c:if test="${userId eq board.writer  }">
+		<div class="d-grid gap-2 d-md-flex justify-content-md-center">
+			<button type="button" id="btnEdit" 
+					class="btn btn-primary btn-lg">수정</button>
+					
+			<button type="button" id="btnDelete" 
+					class="btn btn-primary btn-lg">삭제</button>
+		</div>
+	</c:if>
 	</form>
     
   </div>
   <p></p>
-  <input type="text" id="replyer" value="작성자">
+  <!-- 댓글작성자 : 로그인한 사용자의 아이디를 입력 -->
+  <input type="text" id="replyer" value="${userId }">
   <div class="input-group">
   	<span class="input-group-text">답글작성</span>
   	<input type="text" 

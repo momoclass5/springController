@@ -63,7 +63,7 @@ public class FileuploadServiceImpl implements FileuploadService {
 			
 			if(file.exists()) {
 				if(!file.delete()) {
-					System.err.println("path : " + savePath);
+					System.err.println("path : " + s_savePath);
 					System.err.println("파일 삭제 실패!");
 				}
 			}

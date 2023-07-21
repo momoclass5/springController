@@ -144,7 +144,17 @@
 	</div>
 	<div class="mb-3">
 	  <label for="writer" class="form-label">작성자</label>
-	  <input type="text" class="form-control" id="writer" name="writer" value="${board.writer}">
+	  
+	  <!-- 작성화면일때 -->
+	  <c:if test="${empty board.writer}">
+		  <input type="text" class="form-control" id="writer" name="writer" 
+		  			readonly="readonly" value="${userId}">
+	  </c:if>
+	  <!-- 수정화면일때 -->
+  	  <c:if test="${not empty board.writer}">
+		  <input type="text" class="form-control" id="writer" name="writer" 
+		  			readonly="readonly" value="${board.writer}">
+	  </c:if>
 	</div>
 	<div class="mb-3">
 	  <label for="writer" class="form-label">첨부파일</label>
