@@ -9,6 +9,7 @@ import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.momo.service.BoardService;
@@ -100,33 +101,47 @@ public class BoardController {
 	 */
 	@PostMapping("write")
 	public String writeAction(BoardVO board
+								, List<MultipartFile> files
 								, RedirectAttributes rttr
 								, Model model) {
 		log.info(board);
 		
-		// 시퀀스 조회 후 시퀀스 번호를 bno에 저장
-		int res = boardService.insertSelectKey(board);
+		int res;
+
+		try {
+			// 시퀀스 조회 후 시퀀스 번호를 bno에 저장
+			// 게시물등록및 파일 첨부
+			res = boardService.insertSelectKey(board, files);
+			String msg = "";
+			
+			if(res > 0) {
+				
+				msg = board.getBno() + "번 등록되었습니다";
+				// url?msg=등록 (쿼리스트링으로 전달 -> param.msg)
+				//rttr.addAttribute("msg", msg);
+				
+				// 세션영역에 저장 -> msg
+				// 새로고침시 유지되지 않음
+				rttr.addFlashAttribute("msg", msg);
+				
+				return "redirect:/board/list";
+				
+			} else {
+				msg = "등록중 예외사항이 발생 하였습니다.";
+				model.addAttribute("msg", msg);
+				return "/board/message";
+			}
 		
-		String msg = "";
-		
-		if(res > 0) {
+		} catch (Exception e) {
+			log.info(e.getMessage());
+			if(e.getMessage().indexOf("첨부파일")>-1) {
+				model.addAttribute("msg", e.getMessage());
+			} else {
+				model.addAttribute("msg", "등록중 예외사항이 발생 하였습니다.");
+			}
 			
-			msg = board.getBno() + "번 등록되었습니다";
-			// url?msg=등록 (쿼리스트링으로 전달 -> param.msg)
-			//rttr.addAttribute("msg", msg);
-			
-			// 세션영역에 저장 -> msg
-			// 새로고침시 유지되지 않음
-			rttr.addFlashAttribute("msg", msg);
-			
-			return "redirect:/board/list";
-			
-		} else {
-			msg = "등록중 예외사항이 발생 하였습니다.";
-			model.addAttribute("msg", msg);
 			return "/board/message";
 		}
-		
 		
 	}
 	

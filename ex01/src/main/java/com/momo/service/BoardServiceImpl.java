@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.momo.mapper.BoardMapper;
 import com.momo.vo.BoardVO;
@@ -40,6 +42,9 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	@Autowired
+	private FileuploadService fileuploadService;
+	
 	@Override
 	public List<BoardVO> getListXml(Criteria cri, Model model) {
 		/*
@@ -65,8 +70,18 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int insertSelectKey(BoardVO board) {
-		return boardMapper.insertSelectKey(board);
+	@Transactional(rollbackFor = Exception.class)
+	public int insertSelectKey(BoardVO board
+								, List<MultipartFile> files) throws Exception {
+		
+		// 게시물 등록
+		int res = boardMapper.insertSelectKey(board);
+		
+		// 파일 첨부
+		fileuploadService.fileupload(files, board.getBno());
+		
+		
+		return res;
 	}
 
 	@Override

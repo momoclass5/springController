@@ -32,8 +32,76 @@
 				viewForm.method="get";
 				viewForm.submit();
 			});
+			
+			// 파일목록 조회및 출력
+			getFileList();
 		})
 		
+		function getFileList(){
+			///file/list/{bno}
+			let bno = '${board.bno}';
+			if(bno){
+				fetch('/file/list/'+bno)
+					.then(response => response.json())
+					.then(map => viewFileList(map));
+			}
+			
+		}
+		
+		function viewFileList(map){
+			console.log(map);
+			let content = '';
+			if(map.list.length > 0){
+				content += '<div class="mb-3">                                             '
+							+'  <label for="attachFile" class="form-label">'
+							+'		첨부파일 목록</label> '
+							+'  <div class="form-control" id="attachFile">                   ';
+		
+				                                                                 
+				map.list.forEach(function(item, index){
+					let savePath = encodeURIComponent(item.savePath);
+					content += "<a href='/file/download?fileName=" 
+						    + savePath+"'>"
+							+ item.filename + '</a>'
+							+ ' <i onclick="attachFileDelete(this)" '
+							+ '   data-bno="'+item.bno+'" data-uuid="'+item.uuid+'" '
+							+ '   class="fa-regular fa-square-minus"></i>'
+							+ '<br>';
+					})
+				
+				content += '  </div>                      '
+							+'</div>                              ';		
+				
+			} else {
+				content = '등록된 파일이 없습니다.';
+			}
+			divFileupload.innerHTML = content;
+			
+		}
+		
+		function attachFileDelete(e){
+			let bno = e.dataset.bno;
+			let uuid = e.dataset.uuid;
+			// 값이 유효하지 않은 경우 메세지 처리
+			// fetch 요청
+			//fetch('/file/delete/'+uuid+'/'+bno)
+			// el 표현식 -> \${ } (el 표현식으로 처리 하지 않음)
+			fetch(`/file/delete/\${uuid}/\${bno}`)
+				.then(response => response.json())
+				.then(map => fileDeleteRes(map));
+			
+		}
+		
+		// 삭제 결과 처리
+		function fileDeleteRes(map){
+			if(map.result == 'success'){
+				console.log(map.msg);
+				// 리스트 조회
+				getFileList();
+			} else {
+				alert(map.msg);
+			}
+		}
 	</script>
 </head>
 <body>
@@ -51,10 +119,17 @@
   
   <!-- 글쓰기 -->
   <div class="list-group w-auto">
-    <form method="post" action="/board/write" name="viewForm">
+    <form method="post" 
+    		enctype="multipart/form-data"
+    		action="/board/write" name="viewForm">
     
     <!-- 페이지, 검색 유지 -->
-    <input type="text" name="pageNo" value="${param.pageNo }">
+	<c:if test="${not empty param.pageNo}">
+	    <input type="text" name="pageNo" value="${param.pageNo}">
+	</c:if>
+	<c:if test="${empty param.pageNo}">
+	    <input type="text" name="pageNo" value="1">
+	</c:if>        
     <input type="text" name="searchField" value="${param.searchField }">
     <input type="text" name="searchWord" value="${param.searchWord }">
     
@@ -71,6 +146,14 @@
 	  <label for="writer" class="form-label">작성자</label>
 	  <input type="text" class="form-control" id="writer" name="writer" value="${board.writer}">
 	</div>
+	<div class="mb-3">
+	  <label for="writer" class="form-label">첨부파일</label>
+	  <input class="form-control" type="file" id="files" name="files">
+	</div>
+	
+	<!-- 첨부파일 -->
+	<div id="divFileupload"></div>
+	
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
 		<!-- bno 값이 있으면 수정하기 -->
 		<c:if test="${not empty board.bno}" var="res">

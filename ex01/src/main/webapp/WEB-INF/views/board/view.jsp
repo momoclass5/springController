@@ -53,10 +53,51 @@ window.addEventListener('load',function(){
 		replyWrite();
 	});
 	
+	// 파일목록 조회및 출력
+	getFileList();
+	
 	// 댓글목록 조회및 출력
 	getReplyList();
 	
 });
+
+
+function getFileList(){
+	///file/list/{bno}
+	let bno = document.querySelector("#bno").value;
+	fetch('/file/list/'+bno)
+		.then(response => response.json())
+		.then(map => viewFileList(map));
+	
+}
+
+function viewFileList(map){
+	console.log(map);
+	let content = '';
+	if(map.list.length > 0){
+		content += '<div class="mb-3">                                             '
+					+'  <label for="attachFile" class="form-label">'
+					+'		첨부파일 목록</label> '
+					+'  <div class="form-control" id="attachFile">                   ';
+
+		                                                                 
+		map.list.forEach(function(item, index){
+			let savePath = encodeURIComponent(item.savePath);
+			content += "<a href='/file/download?fileName=" 
+				    + savePath+"'>"
+					+ item.filename + '</a>'
+					+ '<br>';
+			})
+		
+		content += '  </div>                      '
+					+'</div>                              ';		
+		
+	} else {
+		content = '등록된 파일이 없습니다.';
+	}
+	divFileupload.innerHTML = content;
+	
+}
 
 </script>
 <main class="container">
@@ -94,6 +135,13 @@ window.addEventListener('load',function(){
 	  <input type="text" class="form-control" readonly
 	  			value='${board.writer }' id="writer" name="writer">
 	</div>
+	
+	<!-- 첨부파일 -->
+	<div id="divFileupload">
+	</div>
+	
+	
+	
 	
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
 		<button type="button" id="btnEdit" 
