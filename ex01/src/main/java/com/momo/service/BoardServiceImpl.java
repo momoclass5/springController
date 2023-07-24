@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.momo.mapper.BoardMapper;
+import com.momo.mapper.ReplyMapper;
 import com.momo.vo.BoardVO;
 import com.momo.vo.Criteria;
+import com.momo.vo.FileuploadVO;
 import com.momo.vo.PageDto;
 
 /**
@@ -44,6 +46,9 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Autowired
 	private FileuploadService fileuploadService;
+	
+	@Autowired
+	private ReplyMapper replyMapper;
 	
 	@Override
 	public List<BoardVO> getListXml(Criteria cri, Model model) {
@@ -90,12 +95,24 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int delete(int bno) {
 		// 게시물을 삭제시 첨부된 파일이 있는경우 오류가 발생
-		// 첨부파일을 모두 삭제
+		
+		// 1. 첨부파일을 모두 삭제
 		// 첨부파일 리스트 조회 - fileuploadService
-		// 리스트를 돌면서 
-		// 삭제 처리 - fileuploadService 
+		List<FileuploadVO> list = fileuploadService.getList(bno);
+		int res = 0;
+		for(FileuploadVO vo : list) {
+			// 리스트를 돌면서 
+			// 삭제 처리 - fileuploadService 
+			res += fileuploadService.delete(bno, vo.getUuid());
+		}
+		
+		// 2. 댓글 삭제
+		replyMapper.deleteReplyList(bno);
+		
+		// 3. 게시글 삭제
 		return boardMapper.delete(bno);
 	}
 

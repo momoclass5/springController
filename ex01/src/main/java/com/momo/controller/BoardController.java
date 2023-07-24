@@ -205,15 +205,20 @@ public class BoardController {
 	public String delete(BoardVO board
 							, RedirectAttributes rttr
 							, Model model) {
-		
-		int res = boardService.delete(board.getBno());
-		if(res > 0) {			
-			rttr.addFlashAttribute("msg", "삭제되었습니다.");
-			return "redirect:/board/list";
-		} else {
+		try {
+			int res = boardService.delete(board.getBno());
+			if(res > 0) {			
+				rttr.addFlashAttribute("msg", "삭제되었습니다.");
+				return "redirect:/board/list";
+			} else {
+				model.addAttribute("msg", "삭제중 예외가 발생 하였습니다.");
+				return "/board/message";
+			}	
+		}catch (Exception e) {
 			model.addAttribute("msg", "삭제중 예외가 발생 하였습니다.");
 			return "/board/message";
 		}
+		
 	}
 }
 

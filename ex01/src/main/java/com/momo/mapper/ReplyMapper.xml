@@ -49,6 +49,13 @@
 		  from tbl_reply
 		 where rno=#{rno}
 	</select>
+	
+	<!-- 게시글에 해당하는 댓글 제거 -->
+	<delete id="deleteReplyList">
+		delete 
+		  from tbl_reply
+		 where bno = #{bno}
+	</delete>
 </mapper>
 
 
